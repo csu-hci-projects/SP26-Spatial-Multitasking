@@ -649,6 +649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScannerTrigger
   manifestText: {fileID: 609009329}
   scanDistance: 50
+  shipCaseManager: {fileID: 1796181531}
 --- !u!114 &366759971 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4088004600851389848, guid: 8e5670b3d9f9a3d4789504ed85d8775d, type: 3}
@@ -997,6 +998,7 @@ GameObject:
   - component: {fileID: 606280845}
   - component: {fileID: 606280844}
   - component: {fileID: 606280843}
+  - component: {fileID: 606280846}
   m_Layer: 0
   m_Name: Approve Button
   m_TagString: Untagged
@@ -1034,11 +1036,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &606280844
 MeshRenderer:
@@ -1097,6 +1099,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606280841}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &606280846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606280841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceca77b2b2e41ee45b1d32648d58b416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DecisionButton
+  shipCaseManager: {fileID: 1796181531}
+  isApproveButton: 1
 --- !u!1 &609009327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,7 +1729,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1796181530}
   m_Father: {fileID: 52005734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1000730680
@@ -2295,6 +2312,7 @@ GameObject:
   - component: {fileID: 1583084393}
   - component: {fileID: 1583084392}
   - component: {fileID: 1583084391}
+  - component: {fileID: 1583084394}
   m_Layer: 0
   m_Name: Deny Button
   m_TagString: Untagged
@@ -2332,11 +2350,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1583084392
 MeshRenderer:
@@ -2395,6 +2413,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583084389}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1583084394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583084389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceca77b2b2e41ee45b1d32648d58b416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DecisionButton
+  shipCaseManager: {fileID: 1796181531}
+  isApproveButton: 0
 --- !u!4 &1596817711 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5568758619435239319, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
@@ -2684,6 +2716,63 @@ MonoBehaviour:
   _movementProvider: {fileID: 0}
   _handAligment: 0
   _handGrabPoses: []
+--- !u!1 &1796181529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796181530}
+  - component: {fileID: 1796181531}
+  m_Layer: 0
+  m_Name: ShipCaseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1796181530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796181529}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 993945218}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1796181531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796181529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43fca6d9bd821648874eaf2422cbfad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShipCaseManager
+  manifestText: {fileID: 609009329}
+  shipCases:
+  - shipId: A12
+    verificationCode: 4821
+    claimedCargo: Medical Supplies
+    actualCargo: Medical Supplies
+    shouldApprove: 1
+  - shipId: B07
+    verificationCode: 9134
+    claimedCargo: Food Rations
+    actualCargo: Weapons
+    shouldApprove: 0
+  currentCaseIndex: 0
 --- !u!114 &1805660312 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8010928339288398206, guid: 8e5670b3d9f9a3d4789504ed85d8775d, type: 3}

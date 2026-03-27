@@ -6,6 +6,7 @@ public class ScannerTrigger : MonoBehaviour
 {
     public TextMeshPro manifestText;
     public float scanDistance = 50f;
+    public ShipCaseManager shipCaseManager;
 
     private Grabbable grabbable;
 
@@ -25,7 +26,7 @@ public class ScannerTrigger : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Ship"))
                 {
-                    manifestText.text = "SCAN SUCCESSFUL\n\nShip ID: A12\nCargo Verified";
+                    shipCaseManager.ShowScanResult();
                 }
             }
         }

@@ -10,6 +10,8 @@ public class ShipCaseManager : MonoBehaviour
 
     public int currentCaseIndex = 0;
 
+    private bool caseAlreadyDecided = false;
+
     public ShipCaseData CurrentCase
     {
         get { return shipCases[currentCaseIndex]; }
@@ -22,6 +24,8 @@ public class ShipCaseManager : MonoBehaviour
 
     public void ShowManifest()
     {
+        caseAlreadyDecided = false;
+
         manifestText.text =
             "Ship ID: " + CurrentCase.shipId + "\n" +
             "Cargo: " + CurrentCase.claimedCargo + "\n" +
@@ -39,6 +43,13 @@ public class ShipCaseManager : MonoBehaviour
 
     public void ApproveCase()
     {
+        if (caseAlreadyDecided)
+        {
+            return;
+        }
+
+        caseAlreadyDecided = true;
+
         if (CurrentCase.shouldApprove)
         {
             manifestText.text = "APPROVED\n\nCorrect decision";
@@ -53,6 +64,13 @@ public class ShipCaseManager : MonoBehaviour
 
     public void DenyCase()
     {
+        if (caseAlreadyDecided)
+        {
+            return;
+        }
+
+        caseAlreadyDecided = true;
+
         if (!CurrentCase.shouldApprove)
         {
             manifestText.text = "DENIED\n\nCorrect decision";
@@ -79,6 +97,9 @@ public class ShipCaseManager : MonoBehaviour
         {
             currentCaseIndex = 0;
         }
+
+        Debug.Log("Current case index is now: " + currentCaseIndex);
+        Debug.Log("Current ship id is now: " + CurrentCase.shipId);
 
         ShowManifest();
     }

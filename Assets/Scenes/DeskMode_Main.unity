@@ -1170,14 +1170,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Ship ID: A12
-
-    Cargo: Medical Supplies
-
-    Destination: Europa Port
-
-    Status:
-    Pending Review'
+  m_text: "Ship ID: \r\nCargo: \r\nDestination: \r\nStatus: "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5af241d4fcb49468bb2b967ffd518efb, type: 2}
   m_sharedMaterial: {fileID: 4687939059374929122, guid: 5af241d4fcb49468bb2b967ffd518efb, type: 2}

@@ -2,22 +2,33 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
+public enum CaseStage
+{
+    WaitingForRadio,
+    WaitingForKeypad,
+    WaitingForScan,
+    WaitingForDecision,
+    Complete
+}
+
 public class ShipCaseManager : MonoBehaviour
 {
     public TextMeshPro manifestText;
     public GameObject shipPlaceholder;
 
     public ShipCaseData[] shipCases;
-
     public int currentCaseIndex = 0;
 
     private bool caseAlreadyDecided = false;
     private bool caseStarted = false;
 
+    public CaseStage currentStage;
+
     public ShipCaseData CurrentCase
     {
         get { return shipCases[currentCaseIndex]; }
     }
+
     public bool CaseStarted
     {
         get { return caseStarted; }
@@ -32,33 +43,48 @@ public class ShipCaseManager : MonoBehaviour
     {
         caseAlreadyDecided = false;
         caseStarted = false;
+        currentStage = CaseStage.WaitingForRadio;
 
-        shipPlaceholder.SetActive(false);
+        if (shipPlaceholder != null)
+        {
+            shipPlaceholder.SetActive(false);
+        }
 
         manifestText.text =
-            "No active ship\n" +
-            "Use radio to receive incoming request";
+            "Pick up the radio\n" +
+            "to let in incoming ship";
     }
 
     public void ActivateRadioCall()
     {
-        if (caseStarted)
+        if (caseStarted || currentStage != CaseStage.WaitingForRadio)
         {
             return;
         }
 
         caseStarted = true;
+        currentStage = CaseStage.WaitingForKeypad;
 
         manifestText.text =
             "Incoming Ship: " + CurrentCase.shipId + "\n" +
             "Verification Code: " + CurrentCase.verificationCode + "\n" +
-            "Status: Ship Approaching";
+            "Status: Enter code on keypad";
 
-        shipPlaceholder.SetActive(true);
+        if (shipPlaceholder != null)
+        {
+            shipPlaceholder.SetActive(true);
+        }
     }
 
     public void ShowManifest()
     {
+        if (currentStage != CaseStage.WaitingForKeypad)
+        {
+            return;
+        }
+
+        currentStage = CaseStage.WaitingForScan;
+
         manifestText.text =
             "Ship ID: " + CurrentCase.shipId + "\n" +
             "Cargo: " + CurrentCase.claimedCargo + "\n" +
@@ -67,6 +93,13 @@ public class ShipCaseManager : MonoBehaviour
 
     public void ShowScanResult()
     {
+        if (currentStage != CaseStage.WaitingForScan)
+        {
+            return;
+        }
+
+        currentStage = CaseStage.WaitingForDecision;
+
         manifestText.text =
             "Ship ID: " + CurrentCase.shipId + "\n" +
             "Cargo: " + CurrentCase.claimedCargo + "\n" +
@@ -76,12 +109,13 @@ public class ShipCaseManager : MonoBehaviour
 
     public void ApproveCase()
     {
-        if (caseAlreadyDecided)
+        if (caseAlreadyDecided || currentStage != CaseStage.WaitingForDecision)
         {
             return;
         }
 
         caseAlreadyDecided = true;
+        currentStage = CaseStage.Complete;
 
         if (CurrentCase.shouldApprove)
         {
@@ -97,12 +131,13 @@ public class ShipCaseManager : MonoBehaviour
 
     public void DenyCase()
     {
-        if (caseAlreadyDecided)
+        if (caseAlreadyDecided || currentStage != CaseStage.WaitingForDecision)
         {
             return;
         }
 
         caseAlreadyDecided = true;
+        currentStage = CaseStage.Complete;
 
         if (!CurrentCase.shouldApprove)
         {

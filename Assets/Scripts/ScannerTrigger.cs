@@ -22,11 +22,6 @@ public class ScannerTrigger : MonoBehaviour
             return;
         }
 
-        if (!shipCaseManager.CaseStarted)
-        {
-            return;
-        }
-
         if (grabbable != null && grabbable.SelectingPointsCount > 0)
         {
             Ray ray = new Ray(transform.position, transform.forward);

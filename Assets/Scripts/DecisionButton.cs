@@ -7,8 +7,6 @@ public class DecisionButton : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Something touched the button: " + other.name);
-
         if (isApproveButton)
         {
             shipCaseManager.ApproveCase();

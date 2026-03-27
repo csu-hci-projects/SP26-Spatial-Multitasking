@@ -293,9 +293,9 @@ GameObject:
   - component: {fileID: 155821958}
   - component: {fileID: 155821957}
   - component: {fileID: 155821956}
-  - component: {fileID: 155821961}
   - component: {fileID: 155821959}
   - component: {fileID: 155821960}
+  - component: {fileID: 155821961}
   m_Layer: 0
   m_Name: Radio
   m_TagString: Untagged
@@ -312,8 +312,8 @@ Transform:
   m_GameObject: {fileID: 155821954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.93, y: 0.22, z: -3.805}
-  m_LocalScale: {x: 0.15, y: 0.05, z: 0.3}
+  m_LocalPosition: {x: 1.162, y: 0.224, z: -4.186}
+  m_LocalScale: {x: 0.1, y: 0.02, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1862552902}
@@ -334,7 +334,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -420,7 +420,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -456,9 +456,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 155821954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48d7d581101c3d84fb424a2e56efd66e, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c2c7eb45d774ac43b6f469f48a175a7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RadioButton
+  m_EditorClassIdentifier: Assembly-CSharp::RadioPickupTrigger
   shipCaseManager: {fileID: 1796181531}
 --- !u!4 &162199291 stripped
 Transform:
@@ -567,8 +567,8 @@ Transform:
   m_GameObject: {fileID: 343971301}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.14, y: 0.211, z: -3.526}
-  m_LocalScale: {x: 0.15, y: 0.05, z: 0.3}
+  m_LocalPosition: {x: 1.373, y: 0.211, z: -3.806}
+  m_LocalScale: {x: 0.15, y: 0.03, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1742670452}
@@ -756,6 +756,7 @@ GameObject:
   - component: {fileID: 427177720}
   - component: {fileID: 427177719}
   - component: {fileID: 427177718}
+  - component: {fileID: 427177721}
   m_Layer: 0
   m_Name: Keypad
   m_TagString: Untagged
@@ -772,8 +773,8 @@ Transform:
   m_GameObject: {fileID: 427177716}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.964, y: 0.201, z: -3.755}
-  m_LocalScale: {x: 1, y: 0.04, z: 0.5}
+  m_LocalPosition: {x: 2.011, y: 0.201, z: -3.875}
+  m_LocalScale: {x: 0.5, y: 0.04, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 882532770}
@@ -793,7 +794,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -856,6 +857,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427177716}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &427177721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427177716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f7fe5a7fc289e4bad1797de69b8e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeypadTrigger
+  shipCaseManager: {fileID: 1796181531}
 --- !u!1 &431062682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,7 +1096,7 @@ Transform:
   m_GameObject: {fileID: 606280841}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.055, y: 0.22, z: -3.907}
+  m_LocalPosition: {x: 2.61, y: 0.22, z: -4.133}
   m_LocalScale: {x: 0.1, y: 0.04, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2389,7 +2403,7 @@ Transform:
   m_GameObject: {fileID: 1583084389}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.359, y: 0.22, z: -3.933}
+  m_LocalPosition: {x: 2.913, y: 0.22, z: -4.122}
   m_LocalScale: {x: 0.1, y: 0.04, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2844,6 +2858,7 @@ MonoBehaviour:
     actualCargo: Space Suits
     shouldApprove: 1
   currentCaseIndex: 0
+  currentStage: 0
 --- !u!114 &1805660312 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8010928339288398206, guid: 8e5670b3d9f9a3d4789504ed85d8775d, type: 3}
@@ -3093,8 +3108,8 @@ Transform:
   m_GameObject: {fileID: 2073530133}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.07, y: 0.15, z: -3.776}
-  m_LocalScale: {x: 3, y: 0.1, z: 1}
+  m_LocalPosition: {x: 2.048, y: 0.15, z: -3.945}
+  m_LocalScale: {x: 2, y: 0.1, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 882532770}

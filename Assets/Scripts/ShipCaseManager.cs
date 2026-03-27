@@ -5,12 +5,14 @@ using System.Collections;
 public class ShipCaseManager : MonoBehaviour
 {
     public TextMeshPro manifestText;
+    public GameObject shipPlaceholder;
 
     public ShipCaseData[] shipCases;
 
     public int currentCaseIndex = 0;
 
     private bool caseAlreadyDecided = false;
+    private bool caseStarted = false;
 
     public ShipCaseData CurrentCase
     {
@@ -19,13 +21,40 @@ public class ShipCaseManager : MonoBehaviour
 
     void Start()
     {
-        ShowManifest();
+        StartCase();
+    }
+
+    public void StartCase()
+    {
+        caseAlreadyDecided = false;
+        caseStarted = false;
+
+        shipPlaceholder.SetActive(false);
+
+        manifestText.text =
+            "No active ship\n" +
+            "Use radio to receive incoming request";
+    }
+
+    public void ActivateRadioCall()
+    {
+        if (caseStarted)
+        {
+            return;
+        }
+
+        caseStarted = true;
+
+        manifestText.text =
+            "Incoming Ship: " + CurrentCase.shipId + "\n" +
+            "Verification Code: " + CurrentCase.verificationCode + "\n" +
+            "Status: Ship Approaching";
+
+        shipPlaceholder.SetActive(true);
     }
 
     public void ShowManifest()
     {
-        caseAlreadyDecided = false;
-
         manifestText.text =
             "Ship ID: " + CurrentCase.shipId + "\n" +
             "Cargo: " + CurrentCase.claimedCargo + "\n" +
@@ -98,9 +127,6 @@ public class ShipCaseManager : MonoBehaviour
             currentCaseIndex = 0;
         }
 
-        Debug.Log("Current case index is now: " + currentCaseIndex);
-        Debug.Log("Current ship id is now: " + CurrentCase.shipId);
-
-        ShowManifest();
+        StartCase();
     }
 }

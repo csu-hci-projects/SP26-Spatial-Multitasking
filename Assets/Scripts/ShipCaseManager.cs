@@ -18,6 +18,10 @@ public class ShipCaseManager : MonoBehaviour
     {
         get { return shipCases[currentCaseIndex]; }
     }
+    public bool CaseStarted
+    {
+        get { return caseStarted; }
+    }
 
     void Start()
     {

@@ -17,6 +17,16 @@ public class ScannerTrigger : MonoBehaviour
 
     void Update()
     {
+        if (shipCaseManager == null)
+        {
+            return;
+        }
+
+        if (!shipCaseManager.CaseStarted)
+        {
+            return;
+        }
+
         if (grabbable != null && grabbable.SelectingPointsCount > 0)
         {
             Ray ray = new Ray(transform.position, transform.forward);

@@ -24,6 +24,8 @@ public class ShipCaseManager : MonoBehaviour
 
     public CaseStage currentStage;
 
+    private string enteredCode = "";
+
     public ShipCaseData CurrentCase
     {
         get { return shipCases[currentCaseIndex]; }
@@ -44,6 +46,7 @@ public class ShipCaseManager : MonoBehaviour
         caseAlreadyDecided = false;
         caseStarted = false;
         currentStage = CaseStage.WaitingForRadio;
+        enteredCode = "";
 
         if (shipPlaceholder != null)
         {
@@ -64,15 +67,75 @@ public class ShipCaseManager : MonoBehaviour
 
         caseStarted = true;
         currentStage = CaseStage.WaitingForKeypad;
+        enteredCode = "";
 
         manifestText.text =
             "Incoming Ship: " + CurrentCase.shipId + "\n" +
             "Verification Code: " + CurrentCase.verificationCode + "\n" +
-            "Status: Enter code on keypad";
+            "Enter code on keypad:\n" +
+            "_";
+    }
 
-        if (shipPlaceholder != null)
+    public void AddDigit(string digit)
+    {
+        if (currentStage != CaseStage.WaitingForKeypad)
         {
-            shipPlaceholder.SetActive(true);
+            return;
+        }
+
+        if (enteredCode.Length >= CurrentCase.verificationCode.Length)
+        {
+            return;
+        }
+
+        enteredCode += digit;
+
+        manifestText.text =
+            "Incoming Ship: " + CurrentCase.shipId + "\n" +
+            "Verification Code: " + CurrentCase.verificationCode + "\n" +
+            "Enter code on keypad:\n" +
+            enteredCode;
+    }
+
+    public void ClearCode()
+    {
+        if (currentStage != CaseStage.WaitingForKeypad)
+        {
+            return;
+        }
+
+        enteredCode = "";
+
+        manifestText.text =
+            "Incoming Ship: " + CurrentCase.shipId + "\n" +
+            "Verification Code: " + CurrentCase.verificationCode + "\n" +
+            "Enter code on keypad:\n" +
+            "_";
+    }
+
+    public void SubmitCode()
+    {
+        if (currentStage != CaseStage.WaitingForKeypad)
+        {
+            return;
+        }
+
+        if (enteredCode == CurrentCase.verificationCode)
+        {
+            if (shipPlaceholder != null)
+            {
+                shipPlaceholder.SetActive(true);
+            }
+
+            ShowManifest();
+        }
+        else
+        {
+            manifestText.text =
+                "Incoming Ship: " + CurrentCase.shipId + "\n" +
+                "Incorrect Code\n" +
+                "Try Again:\n" +
+                enteredCode;
         }
     }
 

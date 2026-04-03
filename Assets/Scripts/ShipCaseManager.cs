@@ -4,6 +4,7 @@ using System.Collections;
 
 public enum CaseStage
 {
+    WaitingForKeyCard,
     WaitingForRadio,
     WaitingForKeypad,
     WaitingForScan,
@@ -45,7 +46,7 @@ public class ShipCaseManager : MonoBehaviour
     {
         caseAlreadyDecided = false;
         caseStarted = false;
-        currentStage = CaseStage.WaitingForRadio;
+        currentStage = CaseStage.WaitingForKeyCard;
         enteredCode = "";
 
         if (shipPlaceholder != null)
@@ -54,18 +55,32 @@ public class ShipCaseManager : MonoBehaviour
         }
 
         manifestText.text =
+            "Swipe security keycard\n" +
+            "to access system";
+    }
+
+    public void ActivateKeyCard()
+    {
+        if (caseStarted || currentStage != CaseStage.WaitingForKeyCard)
+        {
+            return;
+        }
+
+        caseStarted = true;
+        currentStage = CaseStage.WaitingForRadio;
+
+        manifestText.text =
             "Pick up the radio\n" +
             "to let in incoming ship";
     }
 
     public void ActivateRadioCall()
     {
-        if (caseStarted || currentStage != CaseStage.WaitingForRadio)
+        if (currentStage != CaseStage.WaitingForRadio)
         {
             return;
         }
 
-        caseStarted = true;
         currentStage = CaseStage.WaitingForKeypad;
         enteredCode = "";
 

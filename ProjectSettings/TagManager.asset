@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ship
   - IndexFinger
+  - KeyCard
   layers:
   - Default
   - TransparentFX

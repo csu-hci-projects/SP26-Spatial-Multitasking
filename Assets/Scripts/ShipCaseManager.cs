@@ -16,6 +16,7 @@ public class ShipCaseManager : MonoBehaviour
 {
     public TextMeshPro manifestText;
     public GameObject shipPlaceholder;
+    public ScannerTrigger scannerTrigger;
 
     public ShipCaseData[] shipCases;
     public int currentCaseIndex = 0;
@@ -48,6 +49,11 @@ public class ShipCaseManager : MonoBehaviour
         caseStarted = false;
         currentStage = CaseStage.WaitingForKeyCard;
         enteredCode = "";
+
+        if (scannerTrigger != null)
+        {
+            scannerTrigger.ResetScanner();
+        }
 
         if (shipPlaceholder != null)
         {

@@ -28,7 +28,7 @@ Files Included:
 
 Videos:
 1. Current Status and EC Prototype Video:
-https://youtu.be/JrhrzTEPBXA
+https://youtu.be/uenTuYXjD8A
 
 2. Code Discussion Video:
 https://youtu.be/giR4CZAU87M 

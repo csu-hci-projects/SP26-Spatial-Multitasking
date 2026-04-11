@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+//using System.Threading.Tasks.Dataflow;
 
 public enum CaseStage
 {
@@ -14,6 +15,9 @@ public enum CaseStage
 
 public class ShipCaseManager : MonoBehaviour
 {
+    [SerializeField] GameObject[] Ships;
+
+    private int shipIndex = 0;
     public TextMeshPro manifestText;
     public GameObject shipPlaceholder;
     public ScannerTrigger scannerTrigger;
@@ -57,7 +61,7 @@ public class ShipCaseManager : MonoBehaviour
 
         if (shipPlaceholder != null)
         {
-            shipPlaceholder.SetActive(false);
+            Ships[shipIndex].SetActive(false);
         }
 
         manifestText.text =
@@ -145,7 +149,14 @@ public class ShipCaseManager : MonoBehaviour
         {
             if (shipPlaceholder != null)
             {
-                shipPlaceholder.SetActive(true);
+                for(int i = 0; i < Ships.Length; i++)
+                {
+                    Ships[i].SetActive(false);
+                    if(i == shipIndex)
+                    {
+                        Ships[i].SetActive(true);
+                    }
+                }
             }
 
             ShowManifest();
@@ -243,11 +254,13 @@ public class ShipCaseManager : MonoBehaviour
 
     public void NextCase()
     {
+        Ships[shipIndex].SetActive(false);
         currentCaseIndex++;
-
+        shipIndex++;
         if (currentCaseIndex >= shipCases.Length)
         {
             currentCaseIndex = 0;
+            shipIndex = 0;
         }
 
         StartCase();

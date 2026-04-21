@@ -24,6 +24,17 @@ public class ScannerTrigger : MonoBehaviour
 
     void Update()
     {
+        if (shipCaseManager == null)
+        {
+            return;
+        }
+
+        // Absolute workflow lock: scanner does nothing unless the case is at scan stage
+        if (shipCaseManager.currentStage != CaseStage.WaitingForScan)
+        {
+            return;
+        }
+
         if (grabbable == null || scanComplete)
         {
             return;
@@ -59,22 +70,20 @@ public class ScannerTrigger : MonoBehaviour
 
             scannedZones.Add(zone);
 
-            int totalZones = currentShip.TotalZones;
             int scannedCount = scannedZones.Count;
 
+            // Only update manifest while actually in scan stage
             if (manifestText != null)
             {
-                manifestText.text = "Scanning ship: " + scannedCount + " / " + requiredZoneCount;
+                manifestText.text =
+                    "Ship ID: " + shipCaseManager.CurrentCase.shipId + "\n" +
+                    "Cargo: " + shipCaseManager.CurrentCase.claimedCargo + "\n" +
+                    "Scanning: " + scannedCount + " / " + requiredZoneCount;
             }
 
             if (scannedCount >= requiredZoneCount)
             {
                 scanComplete = true;
-
-                if (manifestText != null)
-                {
-                    manifestText.text = "Scan complete.";
-                }
 
                 if (shipCaseManager != null)
                 {
@@ -90,9 +99,7 @@ public class ScannerTrigger : MonoBehaviour
         scannedZones.Clear();
         scanComplete = false;
 
-        if (manifestText != null)
-        {
-            manifestText.text = "Scanner ready.";
-        }
+        // Do NOT touch manifestText here.
+        // ShipCaseManager controls workflow text.
     }
 }

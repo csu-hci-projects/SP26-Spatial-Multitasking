@@ -32,6 +32,10 @@ public class ShipCaseManager : MonoBehaviour
 
     private string enteredCode = "";
 
+    // Logging-only fields
+    private float caseStartTime;
+    private int wrongCodeSubmissionsThisCase = 0;
+
     public ShipCaseData CurrentCase
     {
         get { return shipCases[currentCaseIndex]; }
@@ -44,8 +48,17 @@ public class ShipCaseManager : MonoBehaviour
 
     void Start()
     {
+        if (ExperimentLogger.Instance != null)
+        {
+            ExperimentLogger.Instance.StartCondition(participantID, conditionName);
+        }
+
         StartCase();
     }
+
+    [Header("Experiment Info")]
+    public string participantID = "P001";
+    public string conditionName = "Gravity";
 
     public void StartCase()
     {
@@ -53,6 +66,10 @@ public class ShipCaseManager : MonoBehaviour
         caseStarted = false;
         currentStage = CaseStage.WaitingForKeyCard;
         enteredCode = "";
+
+        // Logging reset
+        caseStartTime = Time.time;
+        wrongCodeSubmissionsThisCase = 0;
 
         if (scannerTrigger != null)
         {
@@ -149,10 +166,10 @@ public class ShipCaseManager : MonoBehaviour
         {
             if (shipPlaceholder != null)
             {
-                for(int i = 0; i < Ships.Length; i++)
+                for (int i = 0; i < Ships.Length; i++)
                 {
                     Ships[i].SetActive(false);
-                    if(i == shipIndex)
+                    if (i == shipIndex)
                     {
                         Ships[i].SetActive(true);
                     }
@@ -163,12 +180,34 @@ public class ShipCaseManager : MonoBehaviour
         }
         else
         {
+            wrongCodeSubmissionsThisCase++;
+
             manifestText.text =
                 "Incoming Ship: " + CurrentCase.shipId + "\n" +
                 "Incorrect Code\n" +
                 "Try Again:\n" +
                 enteredCode;
+
+            StartCoroutine(ResetKeypadPromptAfterDelay());
         }
+    }
+
+    private IEnumerator ResetKeypadPromptAfterDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (currentStage != CaseStage.WaitingForKeypad)
+        {
+            yield break;
+        }
+
+        enteredCode = "";
+
+        manifestText.text =
+            "Incoming Ship: " + CurrentCase.shipId + "\n" +
+            "Verification Code: " + CurrentCase.verificationCode + "\n" +
+            "Enter code on keypad:\n" +
+            "_";
     }
 
     public void ShowManifest()
@@ -212,13 +251,27 @@ public class ShipCaseManager : MonoBehaviour
         caseAlreadyDecided = true;
         currentStage = CaseStage.Complete;
 
-        if (CurrentCase.shouldApprove)
+        bool decisionCorrect = CurrentCase.shouldApprove;
+
+        if (decisionCorrect)
         {
             manifestText.text = "APPROVED\n\nCorrect decision";
         }
         else
         {
             manifestText.text = "APPROVED\n\nWrong decision";
+        }
+
+        if (ExperimentLogger.Instance != null)
+        {
+            ExperimentLogger.Instance.LogCaseResult(
+                currentCaseIndex,
+                CurrentCase.shipId,
+                Time.time - caseStartTime,
+                wrongCodeSubmissionsThisCase,
+                "Approve",
+                decisionCorrect
+            );
         }
 
         StartCoroutine(LoadNextCaseAfterDelay());
@@ -234,13 +287,27 @@ public class ShipCaseManager : MonoBehaviour
         caseAlreadyDecided = true;
         currentStage = CaseStage.Complete;
 
-        if (!CurrentCase.shouldApprove)
+        bool decisionCorrect = !CurrentCase.shouldApprove;
+
+        if (decisionCorrect)
         {
             manifestText.text = "DENIED\n\nCorrect decision";
         }
         else
         {
             manifestText.text = "DENIED\n\nWrong decision";
+        }
+
+        if (ExperimentLogger.Instance != null)
+        {
+            ExperimentLogger.Instance.LogCaseResult(
+                currentCaseIndex,
+                CurrentCase.shipId,
+                Time.time - caseStartTime,
+                wrongCodeSubmissionsThisCase,
+                "Deny",
+                decisionCorrect
+            );
         }
 
         StartCoroutine(LoadNextCaseAfterDelay());
@@ -255,12 +322,25 @@ public class ShipCaseManager : MonoBehaviour
     public void NextCase()
     {
         Ships[shipIndex].SetActive(false);
+
         currentCaseIndex++;
         shipIndex++;
+
         if (currentCaseIndex >= shipCases.Length)
         {
-            currentCaseIndex = 0;
-            shipIndex = 0;
+            currentStage = CaseStage.Complete;
+
+            manifestText.text =
+                "Experiment Completed\n\n" +
+                "wait for researcher\n" +
+                "to give you instructions";
+
+            if (ExperimentLogger.Instance != null)
+            {
+                ExperimentLogger.Instance.EndCondition();
+            }
+
+            return;
         }
 
         StartCase();

@@ -32,14 +32,18 @@ public class ExperimentLogger : MonoBehaviour
 
         if (!File.Exists(caseLogPath))
         {
-            File.WriteAllText(caseLogPath,
-                "ParticipantID,Condition,CaseIndex,ShipID,CaseTimeSeconds,WrongCodeSubmissions,FinalDecision,DecisionCorrect\n");
+            File.WriteAllText(
+                caseLogPath,
+                "ParticipantID,Condition,CaseIndex,ShipID,CaseTimeSeconds,KeyCardTimeSeconds,RadioTimeSeconds,KeypadTimeSeconds,ScanTimeSeconds,DecisionTimeSeconds,WrongCodeSubmissions,FinalDecision,DecisionCorrect\n"
+            );
         }
 
         if (!File.Exists(summaryLogPath))
         {
-            File.WriteAllText(summaryLogPath,
-                "ParticipantID,Condition,TotalConditionTime,TotalWrongCodeSubmissions,TotalCorrectDecisions,CasesCompleted\n");
+            File.WriteAllText(
+                summaryLogPath,
+                "ParticipantID,Condition,TotalConditionTime,TotalWrongCodeSubmissions,TotalCorrectDecisions,CasesCompleted\n"
+            );
         }
     }
 
@@ -58,6 +62,11 @@ public class ExperimentLogger : MonoBehaviour
         int caseIndex,
         string shipID,
         float caseTimeSeconds,
+        float keyCardTimeSeconds,
+        float radioTimeSeconds,
+        float keypadTimeSeconds,
+        float scanTimeSeconds,
+        float decisionTimeSeconds,
         int wrongCodeSubmissions,
         string finalDecision,
         bool decisionCorrect)
@@ -68,6 +77,11 @@ public class ExperimentLogger : MonoBehaviour
             $"{caseIndex}," +
             $"{shipID}," +
             $"{caseTimeSeconds:F2}," +
+            $"{keyCardTimeSeconds:F2}," +
+            $"{radioTimeSeconds:F2}," +
+            $"{keypadTimeSeconds:F2}," +
+            $"{scanTimeSeconds:F2}," +
+            $"{decisionTimeSeconds:F2}," +
             $"{wrongCodeSubmissions}," +
             $"{finalDecision}," +
             $"{decisionCorrect}\n";

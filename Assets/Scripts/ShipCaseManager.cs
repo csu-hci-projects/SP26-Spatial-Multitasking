@@ -36,6 +36,19 @@ public class ShipCaseManager : MonoBehaviour
     private float caseStartTime;
     private int wrongCodeSubmissionsThisCase = 0;
 
+    // Per-step timing fields
+    private float keyCardStageStartTime;
+    private float radioStageStartTime;
+    private float keypadStageStartTime;
+    private float scanStageStartTime;
+    private float decisionStageStartTime;
+
+    private float keyCardTimeThisCase = 0f;
+    private float radioTimeThisCase = 0f;
+    private float keypadTimeThisCase = 0f;
+    private float scanTimeThisCase = 0f;
+    private float decisionTimeThisCase = 0f;
+
     public ShipCaseData CurrentCase
     {
         get { return shipCases[currentCaseIndex]; }
@@ -71,6 +84,18 @@ public class ShipCaseManager : MonoBehaviour
         caseStartTime = Time.time;
         wrongCodeSubmissionsThisCase = 0;
 
+        keyCardStageStartTime = Time.time;
+        radioStageStartTime = 0f;
+        keypadStageStartTime = 0f;
+        scanStageStartTime = 0f;
+        decisionStageStartTime = 0f;
+
+        keyCardTimeThisCase = 0f;
+        radioTimeThisCase = 0f;
+        keypadTimeThisCase = 0f;
+        scanTimeThisCase = 0f;
+        decisionTimeThisCase = 0f;
+
         if (scannerTrigger != null)
         {
             scannerTrigger.ResetScanner();
@@ -93,6 +118,9 @@ public class ShipCaseManager : MonoBehaviour
             return;
         }
 
+        keyCardTimeThisCase = Time.time - keyCardStageStartTime;
+        radioStageStartTime = Time.time;
+
         caseStarted = true;
         currentStage = CaseStage.WaitingForRadio;
 
@@ -107,6 +135,9 @@ public class ShipCaseManager : MonoBehaviour
         {
             return;
         }
+
+        radioTimeThisCase = Time.time - radioStageStartTime;
+        keypadStageStartTime = Time.time;
 
         currentStage = CaseStage.WaitingForKeypad;
         enteredCode = "";
@@ -164,6 +195,9 @@ public class ShipCaseManager : MonoBehaviour
 
         if (enteredCode == CurrentCase.verificationCode)
         {
+            keypadTimeThisCase = Time.time - keypadStageStartTime;
+            scanStageStartTime = Time.time;
+
             if (shipPlaceholder != null)
             {
                 for (int i = 0; i < Ships.Length; i++)
@@ -232,6 +266,9 @@ public class ShipCaseManager : MonoBehaviour
             return;
         }
 
+        scanTimeThisCase = Time.time - scanStageStartTime;
+        decisionStageStartTime = Time.time;
+
         currentStage = CaseStage.WaitingForDecision;
 
         manifestText.text =
@@ -247,6 +284,8 @@ public class ShipCaseManager : MonoBehaviour
         {
             return;
         }
+
+        decisionTimeThisCase = Time.time - decisionStageStartTime;
 
         caseAlreadyDecided = true;
         currentStage = CaseStage.Complete;
@@ -268,6 +307,11 @@ public class ShipCaseManager : MonoBehaviour
                 currentCaseIndex,
                 CurrentCase.shipId,
                 Time.time - caseStartTime,
+                keyCardTimeThisCase,
+                radioTimeThisCase,
+                keypadTimeThisCase,
+                scanTimeThisCase,
+                decisionTimeThisCase,
                 wrongCodeSubmissionsThisCase,
                 "Approve",
                 decisionCorrect
@@ -283,6 +327,8 @@ public class ShipCaseManager : MonoBehaviour
         {
             return;
         }
+
+        decisionTimeThisCase = Time.time - decisionStageStartTime;
 
         caseAlreadyDecided = true;
         currentStage = CaseStage.Complete;
@@ -304,6 +350,11 @@ public class ShipCaseManager : MonoBehaviour
                 currentCaseIndex,
                 CurrentCase.shipId,
                 Time.time - caseStartTime,
+                keyCardTimeThisCase,
+                radioTimeThisCase,
+                keypadTimeThisCase,
+                scanTimeThisCase,
+                decisionTimeThisCase,
                 wrongCodeSubmissionsThisCase,
                 "Deny",
                 decisionCorrect

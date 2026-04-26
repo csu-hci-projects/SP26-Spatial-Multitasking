@@ -27,8 +27,8 @@ Files Included:
 - LaTeX/Overleaf Project: https://www.overleaf.com/project/69d18a8c7f4d521bbda36803 
 
 Videos:
-1. Current Status and EC Prototype Video:
+1. Current Status and What has been accomplished:
 https://youtu.be/uenTuYXjD8A
 
-2. Code Discussion Video:
-https://youtu.be/giR4CZAU87M 
+2. Code Discussion Video with Demo of Prototype:
+https://youtu.be/IljIcdo2fF4

@@ -24,7 +24,7 @@ Paper Sections Included in This Checkpoint:
 - Methodology
 
 Files Included:
-- LaTeX/Overleaf Project: https://www.overleaf.com/project/69d18a8c7f4d521bbda36803 
+- LaTeX/Overleaf Project: https://www.overleaf.com/read/qcsnddnhwgqp#66f0d5 
 
 Videos:
 1. Current Status and What has been accomplished:

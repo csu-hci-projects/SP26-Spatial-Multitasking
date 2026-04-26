@@ -10,7 +10,7 @@ Team Members:
 Michael Farrell
 Marissa Graham
 
-Checkpoint1:
+Checkpoint2:
 
 Project Summary:
 This project studies multitasking in virtual reality by comparing two workspace interaction conditions. 

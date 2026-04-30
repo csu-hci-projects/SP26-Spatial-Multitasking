@@ -19,7 +19,7 @@ Included in this ZIP:
 - README with video links and project instructions
 
 GitHub Repository:
-PASTE GITHUB LINK HERE
+https://github.com/csu-hci-projects/SP26-Spatial-Multitasking/tree/main
 
 Short Overview Video:
 View link: https://youtu.be/xK0uqYhxbMA

@@ -1,132 +1,195 @@
-# SP26-Spatial-Multitasking
 # Designing for Multitasking: Spatial Object Placement in Virtual 3D Interfaces
 
 **Team:** Spatial Multitasking Workspace  
 **Course:** CS465 Multimodal Interaction for 3D Interfaces  
+**Group Members:** Marissa Graham and Michael Farrell  
 
 ## Overview
 
-This project explores how workspace layout design in virtual reality affects multitasking performance. We compare two versions of the same VR workflow to study whether users perform better when tools follow realistic desk placement rules or when they can be placed freely in 3D space.
+This project is a Unity VR research prototype that compares two workspace layouts for multitasking in virtual reality. The goal is to study whether users perform better in a realistic gravity-based desk workspace or in a zero-gravity workspace where tools can be arranged more freely in 3D space.
 
-Our prototype is a **spaceport inspection booth** where users must process incoming ships by checking their information, verifying cargo, and making approval decisions. The main goal is to measure how **spatial freedom**, **gravity**, and **tool placement rules** influence:
+The prototype places the user in a **spaceport inspection booth**. Participants process incoming ships by logging in, receiving a verification code, entering the code on a keypad, checking a manifest screen, scanning ship/cargo information, and making an approve or deny decision.
+
+The project measures how workspace layout affects:
 
 - task completion time
-- error rate
-- workload
-- user preference
+- time spent on individual task steps
+- wrong code submissions
+- decision accuracy
+- usability and participant preference
 
-This project is relevant to VR training, simulation, and operational environments such as security checks, monitoring stations, and maintenance workflows, where speed, accuracy, and usability matter.
+This project is relevant to VR training, simulation, and operational workspaces where users must switch between multiple tools while maintaining speed and accuracy.
 
 ---
 
 ## Research Question
 
-How does spatial object placement in a virtual 3D workspace affect multitasking performance?
-
-More specifically, we compare:
-
-- **Desk / Gravity Mode:** tools rest on a desk with gravity enabled and realistic placement constraints
-- **Zero-G Mode:** tools can be placed and kept anywhere around the user in 3D space
-
-By keeping the workflow the same across both conditions, we can directly compare how workspace design impacts usability and efficiency.
+When users must switch repeatedly among several tools and displays in a VR workspace, is performance and usability better with a gravity-constrained desk layout or with a zero-gravity free-placement layout?
 
 ---
 
-## Prototype Description
+## Workspace Conditions
 
-The user works in a **spaceport inspection booth** and processes incoming ships requesting entry.
+### Gravity Condition
 
-For each ship case, the user must:
+In the Gravity condition, tools are arranged around a realistic desk workspace. Objects use gravity-based placement and behave more like physical objects on a desk. This condition represents a more traditional workstation layout inside VR.
 
-1. Use a **radio** to receive the ship’s request and verification code  
-2. Enter the code on a **keypad** to pull up ship information  
-3. Review the **manifest screen** to see the claimed cargo  
-4. Use a **scanner** or **binocular-style tool** to inspect the ship and cargo  
-5. Compare the observed cargo against the manifest  
-6. Make a final **approve / deny** decision  
+### Zero-G Condition
 
-The prototype includes two versions of this same workflow:
+In the Zero-G condition, the same tools and workflow are used, but objects are not constrained by normal desk gravity in the same way. Tools can float or be positioned more freely in 3D space. This condition explores whether spatial freedom improves or hurts multitasking in VR.
 
-### Version A: Realistic Desk Mode
-- tools sit on the desk
-- gravity is enabled
-- placement behaves more like a real-world workstation
+---
 
-### Version B: Zero-G Mode
-- tools can be placed anywhere in the environment
-- no fixed desk layout is required
-- users can organize their workspace spatially around themselves
+## Task Workflow
+
+Each ship case follows the same sequence:
+
+1. Use the keycard to log in.
+2. Use the radio to receive the ship verification code.
+3. Enter the verification code on the keypad.
+4. Read the ship/cargo information on the manifest screen.
+5. Use the scanner to scan the ship/cargo.
+6. Decide whether the ship should be approved or denied.
+7. Press the green Approve button or the red Deny button.
+8. Continue to the next case until the condition is complete.
+
+The same workflow is used in both conditions so performance can be compared directly.
 
 ---
 
 ## Study Design
 
-This project uses a **within-subject study design**, meaning each participant experiences both interaction conditions.
+This project uses a within-subject study design. Each participant completes both the Gravity and Zero-G conditions.
 
-### Planned participants
-- 8–10 participants
+### Measures Collected
 
-### Controlled factors
-- same tasks
-- same ship cases
-- same instructions
-- same practice round
-- same tools and workflow in both modes
+The prototype records:
 
-### Measured variables
-- task completion time
-- time per subtask
-- number of errors
-- correctness of final decisions
-- ease of use
-- perceived workload
-- user preference
+- participant ID
+- condition name
+- case number
+- ship ID
+- total case completion time
+- keycard time
+- radio time
+- keypad time
+- scan time
+- decision time
+- wrong code submissions
+- final approve/deny decision
+- whether the final decision was correct
 
-### Procedure
-1. Participants receive a short explanation of the study  
-2. Participants review instructions for the VR task  
-3. Participants complete a short practice/tutorial round  
-4. Participants perform the inspection workflow in both conditions  
-5. Data is logged during play  
-6. Participants complete a short exit questionnaire and provide feedback  
+The project also supports post-task feedback and subjective comparison between the two workspace conditions.
 
 ---
 
 ## Hardware and Software
 
 ### Hardware
-- Meta Quest / Oculus Quest headset
+
+- Meta Quest headset
+- VR-capable computer
+- Quest Link, Air Link, or compatible Quest development setup
 
 ### Software
+
 - Unity
-- VR interaction packages / SDKs used in this project
-- data logging tools built into the Unity prototype
-
-> Update this section with the exact Unity version and SDK packages used in the repo.
-
----
-
-## Repository Goals
-
-This repository contains the development of a Unity VR prototype that supports:
-
-- a complete spaceport inspection workflow
-- two workspace conditions:
-  - Desk / Gravity Mode
-  - Zero-G Mode
-- shared task logic across both conditions
-- timing and error logging
-- practice/tutorial flow
-- experiment-ready prototype for user testing
+- Meta XR / Oculus VR setup
+- XR interaction components
+- TextMeshPro
+- C# scripts for task flow, interaction logic, and data logging
 
 ---
 
-## Expected Deliverables
+## Main Scripts
 
-- working Unity VR prototype
-- two complete workspace modes
-- implemented logging for time and errors
-- short post-task survey materials
-- study data and analysis summary
-- final report
-- final presentation/demo
+### `ShipCaseManager.cs`
+
+Controls the main experiment flow. This script manages the current ship case, controls the required task sequence, updates the manifest screen, checks progress, and advances the participant through the inspection workflow.
+
+### `ExperimentLogger.cs`
+
+Records participant data and saves results to CSV files. It logs case-level timing data, wrong code submissions, final decisions, and condition-level summary data.
+
+### `KeyCardTrigger.cs`
+
+Detects when the keycard interaction has been completed and allows the participant to progress to the next step.
+
+### `KeypadButton.cs`
+
+Handles keypad button presses, number entry, clear/enter behavior, code validation, and wrong code submissions.
+
+### `ScannerTrigger.cs`
+
+Handles scanner interactions and verifies that the participant has completed the scan step.
+
+### `DecisionButton.cs`
+
+Handles the approve and deny buttons and records the participant’s final decision for each case.
+
+---
+
+## Running the Project
+
+1. Download or clone this GitHub repository.
+2. Open Unity Hub.
+3. Click **Add** or **Add project from disk**.
+4. Select the main Unity project folder.
+5. Wait for Unity to import the project files.
+6. Open either the Gravity scene or the Zero-G scene.
+7. Connect the Meta Quest headset.
+8. Start Quest Link or Air Link if running through a computer.
+9. Press Play in Unity, or build and run the project on the headset.
+10. Follow the in-game workflow.
+
+---
+
+## Running the Gravity Scene
+
+1. Open the scene for the Gravity condition.
+2. Press Play in Unity or build the scene to the headset.
+3. The participant begins inside the spaceport inspection booth.
+4. Tools should be arranged around the desk.
+5. Complete the ship inspection cases by following the prompts.
+
+---
+
+## Running the Zero-G Scene
+
+1. Open the scene for the Zero-G condition.
+2. Press Play in Unity or build the scene to the headset.
+3. The participant begins inside the same spaceport inspection booth.
+4. Complete the same ship inspection workflow.
+5. Objects are not constrained in the same way by normal desk gravity.
+
+---
+
+## Data Logging
+
+Data is saved automatically through the `ExperimentLogger` script. CSV files are written using Unity’s `Application.persistentDataPath`.
+
+The exact save location depends on whether the project is run in the Unity Editor, on a computer, or directly on the headset.
+
+The logger creates case-level and summary-level data for later analysis.
+
+---
+
+## Final Submission Materials
+
+The final Canvas submission includes:
+
+- Final Report PDF
+- LaTeX source files
+- Literature survey PDFs
+- GitHub/source code link
+- Video links
+- Downloadable video file links
+- Additional study materials and data
+
+The README included in the Canvas ZIP contains the final video links, Overleaf link, GitHub link, and detailed grading notes.
+
+---
+
+## Project Status
+
+This project was completed as a CS465 semester project. It is a research prototype designed to compare VR workspace layouts, not a commercial application. The focus is on experimental design, prototype implementation, data collection, and analysis of multitasking performance in VR.

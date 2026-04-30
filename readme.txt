@@ -22,8 +22,8 @@ GitHub Repository:
 PASTE GITHUB LINK HERE
 
 Short Overview Video:
-View link: PASTE VIEW LINK HERE
-Download link: PASTE DOWNLOAD LINK HERE
+View link: https://youtu.be/xK0uqYhxbMA
+Download link: https://drive.google.com/file/d/121-iF6emJma_dzfSWN9TtiQYVGgpoEGs/view?usp=sharing 
 
 Presentation Video:
 View link:  https://youtu.be/yod3MRW_lEs
